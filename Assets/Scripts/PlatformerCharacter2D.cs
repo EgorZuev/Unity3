@@ -38,10 +38,10 @@ namespace UnityStandardAssets._2D
         {
             _isGrounded = false;
 
-            
+
             if (Collider2D.gameObject == gameObject)
                 _isGrounded = true;
-            
+
             Animator.SetBool("Ground", _isGrounded);
 
             Animator.SetFloat("vSpeed", Rigidbody2D.velocity.y);
@@ -60,7 +60,7 @@ namespace UnityStandardAssets._2D
             {
                 Animator.SetFloat("Speed", Mathf.Abs(_move));
 
-                Rigidbody2D.velocity = new Vector2(_move*_maxSpeed, Rigidbody2D.velocity.y);
+                Rigidbody2D.velocity = new Vector2(_move * _maxSpeed, Rigidbody2D.velocity.y);
 
                 if (_move > 0 && _isFacingRight)
                 {
