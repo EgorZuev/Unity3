@@ -4,18 +4,17 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets._2D
 {
-    public class PlatformerCharacter2D : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _jumpForce = 400f;
-        [SerializeField] private bool _airControl = false;
+        [SerializeField] private int _coins = 0;
 
         private static Animator Animator;
         private static Rigidbody2D Rigidbody2D;
         private static Collider2D Collider2D;
 
         private bool _isFacingRight;
-        private bool _isGrounded;
         private bool _isJump;
         private float _move;
 
@@ -32,50 +31,26 @@ namespace UnityStandardAssets._2D
             {
                 _isJump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
-        }
 
-        private void FixedUpdate()
-        {
-            _isGrounded = false;
-
-
-            if (Collider2D.gameObject == gameObject)
-                _isGrounded = true;
-
-            Animator.SetBool("Ground", _isGrounded);
-
-            Animator.SetFloat("vSpeed", Rigidbody2D.velocity.y);
-
-            Move();
-
-            _isJump = false;
-        }
-
-
-        public void Move()
-        {
             _move = CrossPlatformInputManager.GetAxis("Horizontal");
 
-            if (_isGrounded || _airControl)
+            Animator.SetFloat("Speed", Mathf.Abs(_move));
+
+            Rigidbody2D.velocity = new Vector2(_move * _maxSpeed, Rigidbody2D.velocity.y);
+
+            if (_move > 0 && _isFacingRight)
             {
-                Animator.SetFloat("Speed", Mathf.Abs(_move));
-
-                Rigidbody2D.velocity = new Vector2(_move * _maxSpeed, Rigidbody2D.velocity.y);
-
-                if (_move > 0 && _isFacingRight)
-                {
-                    Flip();
-                }
-                else if (_move < 0 && !_isFacingRight)
-                {
-                    Flip();
-                }
+                Flip();
             }
-            if (_isGrounded && _isJump && Animator.GetBool("Ground"))
+            else if (_move < 0 && !_isFacingRight)
             {
-                _isGrounded = false;
-                Animator.SetBool("Ground", false);
+                Flip();
+            }
+
+            if (_isJump)
+            {
                 Rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
+                _isJump = false;
             }
         }
 
@@ -86,6 +61,11 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+        }
+
+        public void AddCoin()
+        {
+            _coins++;
         }
     }
 }
