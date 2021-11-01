@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets._2D;
 
 public class Enemy : MonoBehaviour
 {
@@ -34,6 +35,14 @@ public class Enemy : MonoBehaviour
             {
                 _currentPoint = 0;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.TryGetComponent(out Player player))
+        {
+            GameObject.Destroy(player.gameObject);
         }
     }
 }
