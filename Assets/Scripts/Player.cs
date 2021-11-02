@@ -19,7 +19,6 @@ namespace UnityStandardAssets._2D
         private static string Speed = "Speed";
 
         private bool _isFacingRight;
-        private bool _isJump;
         private float _move;
 
         private void Awake()
@@ -33,7 +32,7 @@ namespace UnityStandardAssets._2D
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _isJump = true;
+                Rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
             }
 
             if (Input.GetKey(KeyCode.A))
@@ -60,12 +59,6 @@ namespace UnityStandardAssets._2D
             else if (_move < 0 && !_isFacingRight)
             {
                 Flip();
-            }
-
-            if (_isJump)
-            {
-                Rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
-                _isJump = false;
             }
         }
 
