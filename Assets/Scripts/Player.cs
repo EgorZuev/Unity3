@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets._2D
 {
+
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour
     {
         [SerializeField] private float _maxSpeed = 10f;
@@ -13,6 +16,7 @@ namespace UnityStandardAssets._2D
         private static Animator Animator;
         private static Rigidbody2D Rigidbody2D;
         private static Collider2D Collider2D;
+        private static string Speed = "Speed";
 
         private bool _isFacingRight;
         private bool _isJump;
@@ -27,14 +31,25 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (!_isJump)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                _isJump = CrossPlatformInputManager.GetButtonDown("Jump");
+                _isJump = true;
             }
 
-            _move = CrossPlatformInputManager.GetAxis("Horizontal");
+            if (Input.GetKey(KeyCode.A))
+            {
+                _move = -1;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                _move = 1;
+            }
+            else
+            {
+                _move = 0;
+            }
 
-            Animator.SetFloat("Speed", Mathf.Abs(_move));
+            Animator.SetFloat(Speed, Mathf.Abs(_move));
 
             Rigidbody2D.velocity = new Vector2(_move * _maxSpeed, Rigidbody2D.velocity.y);
 
@@ -63,9 +78,13 @@ namespace UnityStandardAssets._2D
             transform.localScale = theScale;
         }
 
-        public void AddCoin()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            _coins++;
+            if (collision.TryGetComponent<Coin>(out Coin coin))
+            {
+                _coins++;
+                Destroy(coin.gameObject);
+            }
         }
     }
 }
