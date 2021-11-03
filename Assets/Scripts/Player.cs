@@ -13,26 +13,26 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float _jumpForce = 400f;
         [SerializeField] private int _coins = 0;
 
-        private static Animator Animator;
-        private static Rigidbody2D Rigidbody2D;
-        private static Collider2D Collider2D;
         private static string Speed = "Speed";
 
+        private Animator _animator;
+        private Rigidbody2D _rigidbody2D;
+        private Collider2D _collider2D;
         private bool _isFacingRight;
         private float _move;
 
         private void Awake()
         {
-            Animator = GetComponent<Animator>();
-            Rigidbody2D = GetComponent<Rigidbody2D>();
-            Collider2D = GetComponent<Collider2D>();
+            _animator = GetComponent<Animator>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _collider2D = GetComponent<Collider2D>();
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
+                _rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
             }
 
             if (Input.GetKey(KeyCode.A))
@@ -48,9 +48,9 @@ namespace UnityStandardAssets._2D
                 _move = 0;
             }
 
-            Animator.SetFloat(Speed, Mathf.Abs(_move));
+            _animator.SetFloat(Speed, Mathf.Abs(_move));
 
-            Rigidbody2D.velocity = new Vector2(_move * _maxSpeed, Rigidbody2D.velocity.y);
+            _rigidbody2D.velocity = new Vector2(_move * _maxSpeed, _rigidbody2D.velocity.y);
 
             if (_move > 0 && _isFacingRight)
             {
