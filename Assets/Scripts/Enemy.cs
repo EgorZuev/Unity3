@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     {
         if(collision.collider.TryGetComponent(out Player player))
         {
-            GameObject.Destroy(player.gameObject);
+            Destroy(player.gameObject);
         }
     }
 }

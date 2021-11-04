@@ -11,13 +11,11 @@ namespace UnityStandardAssets._2D
     {
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _jumpForce = 400f;
-        [SerializeField] private int _coins = 0;
 
         private static string Speed = "Speed";
 
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
-        private Collider2D _collider2D;
         private bool _isFacingRight;
         private float _move;
 
@@ -25,7 +23,6 @@ namespace UnityStandardAssets._2D
         {
             _animator = GetComponent<Animator>();
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _collider2D = GetComponent<Collider2D>();
         }
 
         private void Update()
@@ -69,15 +66,6 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.TryGetComponent<Coin>(out Coin coin))
-            {
-                _coins++;
-                Destroy(coin.gameObject);
-            }
         }
     }
 }
