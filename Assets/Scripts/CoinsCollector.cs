@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class CollectingCoins : MonoBehaviour
+public class CoinsCollector : MonoBehaviour
 {
     [SerializeField] private int _coins = 0;
 

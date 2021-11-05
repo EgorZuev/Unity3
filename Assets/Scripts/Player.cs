@@ -17,7 +17,7 @@ namespace UnityStandardAssets._2D
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
         private bool _isFacingRight;
-        private float _move;
+        private float _movement;
 
         private void Awake()
         {
@@ -34,26 +34,26 @@ namespace UnityStandardAssets._2D
 
             if (Input.GetKey(KeyCode.A))
             {
-                _move = -1;
+                _movement = -1;
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                _move = 1;
+                _movement = 1;
             }
             else
             {
-                _move = 0;
+                _movement = 0;
             }
 
-            _animator.SetFloat(Speed, Mathf.Abs(_move));
+            _animator.SetFloat(Speed, Mathf.Abs(_movement));
 
-            _rigidbody2D.velocity = new Vector2(_move * _maxSpeed, _rigidbody2D.velocity.y);
+            _rigidbody2D.velocity = new Vector2(_movement * _maxSpeed, _rigidbody2D.velocity.y);
 
-            if (_move > 0 && _isFacingRight)
+            if (_movement > 0 && _isFacingRight)
             {
                 Flip();
             }
-            else if (_move < 0 && !_isFacingRight)
+            else if (_movement < 0 && !_isFacingRight)
             {
                 Flip();
             }
