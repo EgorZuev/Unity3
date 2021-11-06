@@ -12,7 +12,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _jumpForce = 400f;
 
-        private static string Speed = "Speed";
+        private const string Speed = "Speed";
 
         private Animator _animator;
         private Rigidbody2D _rigidbody2D;
